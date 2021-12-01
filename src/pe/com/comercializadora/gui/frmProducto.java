@@ -58,8 +58,18 @@ public class frmProducto extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla_categoria = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        txt_buscar_categoria = new javax.swing.JTextField();
+        btn_buscar = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -74,9 +84,9 @@ public class frmProducto extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Productos");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 428, 100));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 100));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(34, 105, 212));
@@ -164,24 +174,168 @@ public class frmProducto extends javax.swing.JFrame {
         jButton2.setText("Registrar");
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 130, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
-        );
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Productos"));
 
-        pack();
+        tabla_categoria = new javax.swing.JTable(){
+            public boolean isCellEditable(int row,int column){
+                return false;
+            }
+        };
+        tabla_categoria.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        )
+    );
+    tabla_categoria.setFocusable(false);
+    tabla_categoria.getTableHeader().setResizingAllowed(false);
+    tabla_categoria.getTableHeader().setReorderingAllowed(false);
+    tabla_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            tabla_categoriaMouseClicked(evt);
+        }
+    });
+    jScrollPane1.setViewportView(tabla_categoria);
+
+    jLabel8.setText("Buscar:");
+
+    jSeparator7.setForeground(new java.awt.Color(34, 105, 212));
+
+    txt_buscar_categoria.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    txt_buscar_categoria.setForeground(new java.awt.Color(102, 102, 102));
+    txt_buscar_categoria.setBorder(null);
+    txt_buscar_categoria.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            txt_buscar_categoriaKeyPressed(evt);
+        }
+    });
+
+    btn_buscar.setBackground(new java.awt.Color(13, 55, 212));
+    btn_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    btn_buscar.setForeground(new java.awt.Color(255, 255, 255));
+    btn_buscar.setText("buscar");
+    btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btn_buscarActionPerformed(evt);
+        }
+    });
+
+    btn_salir.setBackground(new java.awt.Color(13, 55, 212));
+    btn_salir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    btn_salir.setForeground(new java.awt.Color(255, 255, 255));
+    btn_salir.setText("salir");
+    btn_salir.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btn_salirActionPerformed(evt);
+        }
+    });
+
+    btn_eliminar.setBackground(new java.awt.Color(13, 55, 212));
+    btn_eliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
+    btn_eliminar.setText("eliminar");
+
+    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+    jPanel3.setLayout(jPanel3Layout);
+    jPanel3Layout.setHorizontalGroup(
+        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel3Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                    .addContainerGap())
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jLabel8)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator7)
+                        .addComponent(txt_buscar_categoria, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_eliminar)
+                            .addGap(51, 51, 51)
+                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(44, 44, 44))))
+    );
+    jPanel3Layout.setVerticalGroup(
+        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txt_buscar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel8))
+            .addGap(0, 0, 0)
+            .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btn_salir)
+                .addComponent(btn_eliminar)
+                .addComponent(btn_buscar))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+            .addContainerGap())
+    );
+
+    jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 500, 430));
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+    );
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabla_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_categoriaMouseClicked
+        // TODO add your handling code here:
+        //tabla_categoria.getColumnModel().getColumn(0).setMaxWidth(0);
+        //tabla_categoria.getColumnModel().getColumn(0).setMinWidth(0);
+        if(evt.getClickCount()==2){
+            int id= Integer.parseInt(tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),0).toString());
+            String nombre= tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),1).toString();
+            
+        }
+
+    }//GEN-LAST:event_tabla_categoriaMouseClicked
+
+    private void txt_buscar_categoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_categoriaKeyPressed
+        // TODO add your handling code here:
+
+        //palabra += evt.getKeyChar();
+        //txt_buscar_categoria.setText(palabra);
+        //JOptionPane.showMessageDialog(rootPane,palabra);
+        
+    }//GEN-LAST:event_txt_buscar_categoriaKeyPressed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        // TODO add your handling code here:
+        //this.setVisible(false);
+    }//GEN-LAST:event_btn_salirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,6 +373,9 @@ public class frmProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -228,17 +385,23 @@ public class frmProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JComboBox<String> jcbx_categoria;
     private javax.swing.JComboBox<String> jcbx_marca;
     private javax.swing.JTextField jtxt_nombreProducto;
     private javax.swing.JTextField jtxt_precioCompra;
     private javax.swing.JTextField jtxt_precioVenta;
+    private javax.swing.JTable tabla_categoria;
+    private javax.swing.JTextField txt_buscar_categoria;
     // End of variables declaration//GEN-END:variables
 }

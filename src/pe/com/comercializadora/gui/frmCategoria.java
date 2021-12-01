@@ -92,7 +92,7 @@ public class frmCategoria extends javax.swing.JFrame {
         btn_eliminar = new javax.swing.JButton();
         btn_registrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -351,7 +351,7 @@ public class frmCategoria extends javax.swing.JFrame {
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        //this.setVisible(false);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     /**

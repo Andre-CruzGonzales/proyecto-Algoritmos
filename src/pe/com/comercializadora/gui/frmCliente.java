@@ -60,7 +60,7 @@ public class frmCliente extends javax.swing.JFrame {
         jtxt_precioVenta3 = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
