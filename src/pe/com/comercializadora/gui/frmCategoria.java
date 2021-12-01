@@ -34,7 +34,7 @@ public class frmCategoria extends javax.swing.JFrame {
         limpiar();
         txt_categoria.requestFocus();
     }
-    private String accion = "save";
+
 
     void ocultar_columnas() {
         tabla_categoria.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -202,6 +202,11 @@ public class frmCategoria extends javax.swing.JFrame {
     btn_eliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
     btn_eliminar.setText("eliminar");
+    btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btn_eliminarActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -346,13 +351,17 @@ public class frmCategoria extends javax.swing.JFrame {
         //txt_buscar_categoria.setText(palabra);
         //JOptionPane.showMessageDialog(rootPane,palabra);
         mostrar(txt_buscar_categoria.getText());
-        System.out.println(palabra);
+        //System.out.println(palabra);
     }//GEN-LAST:event_txt_buscar_categoriaKeyPressed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
         //this.setVisible(false);
     }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
