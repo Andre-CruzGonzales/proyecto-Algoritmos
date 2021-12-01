@@ -11,7 +11,7 @@ package pe.com.comercializadora.modelos;
  */
 public class Cliente {
     private int id;
-    private int numero_documento;
+    private String numero_documento;
     private String nombre;
     private String direccion;
     private String email;
@@ -19,7 +19,7 @@ public class Cliente {
     private String estado_registro;
     private TipoDocumento tipo_documento;
 
-    public Cliente(int id, int numero_documento, String nombre, String direccion, String email, String celular, String estado_registro, TipoDocumento tipo_documento) {
+    public Cliente(int id, String numero_documento, String nombre, String direccion, String email, String celular, String estado_registro, TipoDocumento tipo_documento) {
         this.id = id;
         this.numero_documento = numero_documento;
         this.nombre = nombre;
@@ -38,7 +38,7 @@ public class Cliente {
         this.id = id;
     }
 
-    public void setNumero_documento(int numero_documento) {
+    public void setNumero_documento(String numero_documento) {
         this.numero_documento = numero_documento;
     }
 
@@ -70,7 +70,7 @@ public class Cliente {
         return id;
     }
 
-    public int getNumero_documento() {
+    public String getNumero_documento() {
         return numero_documento;
     }
 
@@ -96,6 +96,9 @@ public class Cliente {
 
     public TipoDocumento getTipo_documento() {
         return tipo_documento;
+    }
+    public String toString(){
+        return "id:"+this.getId()+" numero_documento:"+ this.getNumero_documento()+" nombre:"+this.getNombre();
     }
     
 }

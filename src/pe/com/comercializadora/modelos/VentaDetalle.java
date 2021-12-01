@@ -17,13 +17,23 @@ public class VentaDetalle {
     private String estado_registro;
     private int venta_id;
     private Producto productos;
+    private int cantidad;
 
-    public VentaDetalle(int id, double precio_venta, double precio_unitario, String estado_registro, int venta_id, Producto productos) {
+    public VentaDetalle(int id, double precio_venta, double precio_unitario, String estado_registro,int cantidad, int venta_id, Producto productos) {
         this.id = id;
         this.precio_venta = precio_venta;
         this.precio_unitario = precio_unitario;
         this.estado_registro = estado_registro;
+        this.cantidad = cantidad;
         this.venta_id = venta_id;
+        this.productos = productos;
+    }
+    public VentaDetalle(int id, double precio_venta, double precio_unitario, String estado_registro,int cantidad, Producto productos) {
+        this.id = id;
+        this.precio_venta = precio_venta;
+        this.precio_unitario = precio_unitario;
+        this.estado_registro = estado_registro;
+        this.cantidad = cantidad;
         this.productos = productos;
     }
     public VentaDetalle(){
@@ -54,6 +64,10 @@ public class VentaDetalle {
         this.productos = productos;
     }
 
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
     public int getId() {
         return id;
     }
@@ -76,6 +90,10 @@ public class VentaDetalle {
 
     public Producto getProductos() {
         return productos;
+    }
+
+    public int getCantidad() {
+        return cantidad;
     }
     
 }

@@ -29,6 +29,23 @@ public class Producto {
         this.stock = stock;
         this.marca = marca;
     }
+    public Producto(int id, String nombre, double precio_venta,double stock) {
+        this.id = id;
+        this.nombre = nombre;
+        
+        this.precio_venta = precio_venta;
+        
+        
+        this.stock = stock;
+        
+    }
+    public Producto(int id, String nombre, double precio_venta) {
+        this.id = id;
+        this.nombre = nombre;
+        
+        this.precio_venta = precio_venta;
+        
+    }
     public Producto(){
         
     }

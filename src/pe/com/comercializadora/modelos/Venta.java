@@ -30,7 +30,7 @@ public class Venta {
         this.ventaDetalle = ventaDetalle;
     }
     public Venta(){
-        
+        ventaDetalle = new ArrayList<VentaDetalle>();
     }
 
     public void setId(int id) {
@@ -83,6 +83,12 @@ public class Venta {
 
     public ArrayList<VentaDetalle> getVentaDetalle() {
         return ventaDetalle;
+    }
+    public void addVentaDetalle(VentaDetalle ventaDetalle){
+        this.ventaDetalle.add(ventaDetalle);
+    }
+    public void quitarVentaDetalleIndex(int index){
+        this.ventaDetalle.remove(index);
     }
     
     

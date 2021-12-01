@@ -1,5 +1,10 @@
 package pe.com.comercializadora.gui;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pe.com.comercializadora.controllers.VentaController;
+import pe.com.comercializadora.modelos.Cliente;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,9 +20,32 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarCliente
      */
+    private Cliente cliente = new Cliente();
     public frmBuscarCliente() {
         initComponents();
         this.setLocationRelativeTo(null);
+        mostrar("");
+    }
+    
+    void mostrar(String buscar) {
+        try {
+            DefaultTableModel modelo;
+            VentaController controller = new VentaController();
+            modelo = controller.mostrar_busqueda_cliente(buscar);
+            tabla_cliente.setModel(modelo);
+            ocultar_columnas();
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+    }
+    void ocultar_columnas() {
+        tabla_cliente.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabla_cliente.getColumnModel().getColumn(0).setMinWidth(0);
+        tabla_cliente.getColumnModel().getColumn(0).setPreferredWidth(0);
+    }
+    public Cliente getCliente(){
+        return cliente;
     }
 
     /**
@@ -31,7 +59,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla_categoria = new javax.swing.JTable();
+        tabla_cliente = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         txt_buscar_categoria = new javax.swing.JTextField();
@@ -42,12 +70,12 @@ public class frmBuscarCliente extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Clientes"));
 
-        tabla_categoria = new javax.swing.JTable(){
+        tabla_cliente = new javax.swing.JTable(){
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
-        tabla_categoria.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_cliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,15 +87,15 @@ public class frmBuscarCliente extends javax.swing.JFrame {
             }
         )
     );
-    tabla_categoria.setFocusable(false);
-    tabla_categoria.getTableHeader().setResizingAllowed(false);
-    tabla_categoria.getTableHeader().setReorderingAllowed(false);
-    tabla_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
+    tabla_cliente.setFocusable(false);
+    tabla_cliente.getTableHeader().setResizingAllowed(false);
+    tabla_cliente.getTableHeader().setReorderingAllowed(false);
+    tabla_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
-            tabla_categoriaMouseClicked(evt);
+            tabla_clienteMouseClicked(evt);
         }
     });
-    jScrollPane1.setViewportView(tabla_categoria);
+    jScrollPane1.setViewportView(tabla_cliente);
 
     jLabel4.setText("Buscar:");
 
@@ -108,7 +136,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                             .addComponent(txt_buscar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 52, Short.MAX_VALUE))
+                    .addGap(0, 180, Short.MAX_VALUE))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addContainerGap())
     );
@@ -130,7 +158,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 475, Short.MAX_VALUE)
+        .addGap(0, 603, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -150,17 +178,27 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tabla_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_categoriaMouseClicked
+    private void tabla_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_clienteMouseClicked
         // TODO add your handling code here:
         //tabla_categoria.getColumnModel().getColumn(0).setMaxWidth(0);
         //tabla_categoria.getColumnModel().getColumn(0).setMinWidth(0);
         if(evt.getClickCount()==2){
-            int id= Integer.parseInt(tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),0).toString());
-            String nombre= tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),1).toString();
-            
+            int id= Integer.parseInt(tabla_cliente.getValueAt(tabla_cliente.getSelectedRow(),0).toString());
+            String tipo_documento = (tabla_cliente.getValueAt(tabla_cliente.getSelectedRow(),1).toString());
+            String numero_documento = (tabla_cliente.getValueAt(tabla_cliente.getSelectedRow(),2).toString());
+            String nombre= tabla_cliente.getValueAt(tabla_cliente.getSelectedRow(),3).toString();
+            cliente.setId(id);
+            cliente.setNumero_documento(numero_documento);
+            cliente.setNombre(nombre);
+            System.out.println(cliente.toString());
+            //frmVenta frmventa = new frmVenta();
+            frmVenta.txt_nombre_cliente.setText(cliente.getNombre());
+            frmVenta.txt_numero_documento.setText(cliente.getNumero_documento());
+            frmVenta.getVenta().setCliente(cliente);
+            this.dispose();
         }
 
-    }//GEN-LAST:event_tabla_categoriaMouseClicked
+    }//GEN-LAST:event_tabla_clienteMouseClicked
 
     private void txt_buscar_categoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_categoriaKeyPressed
         // TODO add your handling code here:
@@ -217,7 +255,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable tabla_categoria;
+    private javax.swing.JTable tabla_cliente;
     private javax.swing.JTextField txt_buscar_categoria;
     // End of variables declaration//GEN-END:variables
 }

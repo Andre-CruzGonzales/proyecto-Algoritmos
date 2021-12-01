@@ -1,5 +1,10 @@
 package pe.com.comercializadora.gui;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pe.com.comercializadora.controllers.VentaController;
+import pe.com.comercializadora.modelos.Producto;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,11 +20,33 @@ public class frmBuscarProducto extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarCliente
      */
+    private static Producto producto = new Producto();
+    
     public frmBuscarProducto() {
         initComponents();
         this.setLocationRelativeTo(null);
+        mostrar("");
     }
+    public static Producto getProducto(){
+        return producto;
+    }
+    void mostrar(String buscar) {
+        try {
+            DefaultTableModel modelo;
+            VentaController controller = new VentaController();
+            modelo = controller.mostrar_busqueda_producto(buscar);
+            tabla_producto.setModel(modelo);
+            ocultar_columnas();
 
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+    }
+    void ocultar_columnas() {
+        tabla_producto.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabla_producto.getColumnModel().getColumn(0).setMinWidth(0);
+        tabla_producto.getColumnModel().getColumn(0).setPreferredWidth(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +58,7 @@ public class frmBuscarProducto extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla_categoria = new javax.swing.JTable();
+        tabla_producto = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         txt_buscar_categoria = new javax.swing.JTextField();
@@ -42,12 +69,12 @@ public class frmBuscarProducto extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Productos"));
 
-        tabla_categoria = new javax.swing.JTable(){
+        tabla_producto = new javax.swing.JTable(){
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
-        tabla_categoria.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,15 +86,14 @@ public class frmBuscarProducto extends javax.swing.JFrame {
             }
         )
     );
-    tabla_categoria.setFocusable(false);
-    tabla_categoria.getTableHeader().setResizingAllowed(false);
-    tabla_categoria.getTableHeader().setReorderingAllowed(false);
-    tabla_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
+    tabla_producto.setFocusable(false);
+    tabla_producto.getTableHeader().setReorderingAllowed(false);
+    tabla_producto.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
-            tabla_categoriaMouseClicked(evt);
+            tabla_productoMouseClicked(evt);
         }
     });
-    jScrollPane1.setViewportView(tabla_categoria);
+    jScrollPane1.setViewportView(tabla_producto);
 
     jLabel4.setText("Buscar:");
 
@@ -108,7 +134,7 @@ public class frmBuscarProducto extends javax.swing.JFrame {
                             .addComponent(txt_buscar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 52, Short.MAX_VALUE))
+                    .addGap(0, 245, Short.MAX_VALUE))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addContainerGap())
     );
@@ -130,7 +156,7 @@ public class frmBuscarProducto extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 475, Short.MAX_VALUE)
+        .addGap(0, 668, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -150,17 +176,27 @@ public class frmBuscarProducto extends javax.swing.JFrame {
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tabla_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_categoriaMouseClicked
+    private void tabla_productoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_productoMouseClicked
         // TODO add your handling code here:
         //tabla_categoria.getColumnModel().getColumn(0).setMaxWidth(0);
         //tabla_categoria.getColumnModel().getColumn(0).setMinWidth(0);
         if(evt.getClickCount()==2){
-            int id= Integer.parseInt(tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),0).toString());
-            String nombre= tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),1).toString();
+            int id= Integer.parseInt(tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0).toString());
+            String nombre= tabla_producto.getValueAt(tabla_producto.getSelectedRow(),1).toString();
+            double precio = Double.parseDouble(tabla_producto.getValueAt(tabla_producto.getSelectedRow(),4).toString());
+            producto.setNombre(nombre);
+            producto.setPrecio_venta(precio);
+            producto.setId(id);
             
-        }
+            frmVenta.txt_idProducto.setText("000-10"+producto.getId()+"");
+            frmVenta.txt_nombreProducto.setText(producto.getNombre());
+            frmVenta.txt_precioUnitario.setText(""+producto.getPrecio_venta()+"");
+            frmVenta.btn_agregar_producto.setEnabled(true);
+            this.dispose();
+            //System.out.println(producto.getNombre());
+        }   
 
-    }//GEN-LAST:event_tabla_categoriaMouseClicked
+    }//GEN-LAST:event_tabla_productoMouseClicked
 
     private void txt_buscar_categoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_categoriaKeyPressed
         // TODO add your handling code here:
@@ -218,7 +254,7 @@ public class frmBuscarProducto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable tabla_categoria;
+    private javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txt_buscar_categoria;
     // End of variables declaration//GEN-END:variables
 }

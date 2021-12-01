@@ -5,6 +5,14 @@
  */
 package pe.com.comercializadora.gui;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pe.com.comercializadora.controllers.VentaController;
+import pe.com.comercializadora.modelos.Producto;
+import pe.com.comercializadora.modelos.Venta;
+import pe.com.comercializadora.modelos.VentaDetalle;
+
 /**
  *
  * @author Andre
@@ -14,14 +22,73 @@ public class frmVenta extends javax.swing.JFrame {
     /**
      * Creates new form frmKardex
      */
+    private int index = 0;
+    private static Venta venta;
+    private VentaDetalle ventaDetalle;
+
+    
     frmBuscarCliente frmBuscarCliente = new frmBuscarCliente();
     public frmVenta() {
         
         initComponents();
+        venta = new Venta();
+        ventaDetalle = new VentaDetalle();
         this.setLocationRelativeTo(null);
+        limpiar();
+        limpiar_producto();
+        mostrar_detalle(venta);
         
     }
+    public static Venta getVenta(){
+        return venta;
+    }
+    
+    void limpiar(){
+        btn_quitar.setEnabled(false);
+    }
+    void limpiar_guardar(){
+        venta = new Venta();
+        txt_nombre_cliente.setText("");
+        txt_numero_documento.setText("");
+        txt_cantidad.setText("0");
+        txt_precioUnitario.setText("0.00");
+        txt_total_producto.setText("0.00");
+        txt_idProducto.setText("");
+        txt_nombreProducto.setText("");
+    }
+    void limpiar_producto(){
+        txt_cantidad.setText("0");
+        txt_precioUnitario.setText("0.00");
+        txt_total_producto.setText("0.00");
+        txt_idProducto.setText("");
+        txt_nombreProducto.setText("");
+        frmBuscarProducto.getProducto().setId(0);
+        frmBuscarProducto.getProducto().setNombre("");
+        btn_agregar_producto.setEnabled(false);
+        
+        ventaDetalle.setProductos(null);
+        ventaDetalle.setCantidad(0);
+        ventaDetalle.setPrecio_venta(0.0);
+        ventaDetalle.setPrecio_unitario(0.0);
+        
+    }
+    void mostrar_detalle(Venta v) {
+        try {
+            DefaultTableModel modelo;
+            VentaController controller = new VentaController();
+            modelo = controller.mostrar_venta_detalle(v);
+            tabla_detalle.setModel(modelo);
+            ocultar_columnas_detalle();
 
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+    }
+    void ocultar_columnas_detalle() {
+        tabla_detalle.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabla_detalle.getColumnModel().getColumn(0).setMinWidth(0);
+        tabla_detalle.getColumnModel().getColumn(0).setPreferredWidth(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,39 +103,41 @@ public class frmVenta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jtxt_nombreProducto = new javax.swing.JTextField();
+        txt_numero_documento = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jtxt_precioCompra = new javax.swing.JTextField();
+        txt_idProducto = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        jtxt_precioVenta = new javax.swing.JTextField();
+        txt_precioUnitario = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jtxt_nombreProducto1 = new javax.swing.JTextField();
+        txt_nombre_cliente = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         btn_buscar_producto = new javax.swing.JButton();
-        jtxt_precioCompra1 = new javax.swing.JTextField();
+        txt_nombreProducto = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         btn_buscar_cliente = new javax.swing.JButton();
-        jtxt_precioVenta1 = new javax.swing.JTextField();
+        txt_cantidad = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        jtxt_precioVenta2 = new javax.swing.JTextField();
+        txt_total_producto = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        tabla_detalle = new javax.swing.JTable();
+        btn_guardarVenta = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        lbl_text_total = new javax.swing.JLabel();
+        lbl_total = new javax.swing.JLabel();
+        btn_quitar = new javax.swing.JButton();
+        btn_agregar_producto = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -84,27 +153,27 @@ public class frmVenta extends javax.swing.JFrame {
         jLabel2.setText("Venta");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 100));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 100));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(34, 105, 212));
         jLabel3.setText("Cliente");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
-        jtxt_nombreProducto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_nombreProducto.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_nombreProducto.setBorder(null);
-        jtxt_nombreProducto.setEnabled(false);
-        jPanel2.add(jtxt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 110, 30));
+        txt_numero_documento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_numero_documento.setForeground(new java.awt.Color(102, 102, 102));
+        txt_numero_documento.setBorder(null);
+        txt_numero_documento.setEnabled(false);
+        jPanel2.add(txt_numero_documento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 110, 30));
 
         jSeparator2.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 110, 10));
 
-        jtxt_precioCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_precioCompra.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioCompra.setBorder(null);
-        jtxt_precioCompra.setEnabled(false);
-        jPanel2.add(jtxt_precioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 120, 30));
+        txt_idProducto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_idProducto.setForeground(new java.awt.Color(102, 102, 102));
+        txt_idProducto.setBorder(null);
+        txt_idProducto.setEnabled(false);
+        jPanel2.add(txt_idProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 120, 30));
 
         jSeparator3.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 120, 10));
@@ -122,11 +191,11 @@ public class frmVenta extends javax.swing.JFrame {
         jLabel5.setText("Precio de Unitario:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
 
-        jtxt_precioVenta.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_precioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioVenta.setBorder(null);
-        jtxt_precioVenta.setEnabled(false);
-        jPanel2.add(jtxt_precioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 170, 30));
+        txt_precioUnitario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_precioUnitario.setForeground(new java.awt.Color(102, 102, 102));
+        txt_precioUnitario.setBorder(null);
+        txt_precioUnitario.setEnabled(false);
+        jPanel2.add(txt_precioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 170, 30));
 
         jButton1.setBackground(new java.awt.Color(13, 55, 212));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -139,11 +208,11 @@ public class frmVenta extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 130, -1));
 
-        jtxt_nombreProducto1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_nombreProducto1.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_nombreProducto1.setBorder(null);
-        jtxt_nombreProducto1.setEnabled(false);
-        jPanel2.add(jtxt_nombreProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 210, 30));
+        txt_nombre_cliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_nombre_cliente.setForeground(new java.awt.Color(102, 102, 102));
+        txt_nombre_cliente.setBorder(null);
+        txt_nombre_cliente.setEnabled(false);
+        jPanel2.add(txt_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 210, 30));
 
         jSeparator7.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 210, 10));
@@ -159,11 +228,11 @@ public class frmVenta extends javax.swing.JFrame {
         });
         jPanel2.add(btn_buscar_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 44, -1));
 
-        jtxt_precioCompra1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_precioCompra1.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioCompra1.setBorder(null);
-        jtxt_precioCompra1.setEnabled(false);
-        jPanel2.add(jtxt_precioCompra1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 210, 30));
+        txt_nombreProducto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_nombreProducto.setForeground(new java.awt.Color(102, 102, 102));
+        txt_nombreProducto.setBorder(null);
+        txt_nombreProducto.setEnabled(false);
+        jPanel2.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 210, 30));
 
         jSeparator8.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 210, 10));
@@ -179,10 +248,15 @@ public class frmVenta extends javax.swing.JFrame {
         });
         jPanel2.add(btn_buscar_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 44, -1));
 
-        jtxt_precioVenta1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_precioVenta1.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioVenta1.setBorder(null);
-        jPanel2.add(jtxt_precioVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 130, 30));
+        txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_cantidad.setForeground(new java.awt.Color(102, 102, 102));
+        txt_cantidad.setBorder(null);
+        txt_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_cantidadKeyPressed(evt);
+            }
+        });
+        jPanel2.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 130, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(34, 105, 212));
@@ -197,11 +271,11 @@ public class frmVenta extends javax.swing.JFrame {
         jLabel7.setText("Total del Producto:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 170, -1));
 
-        jtxt_precioVenta2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jtxt_precioVenta2.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioVenta2.setBorder(null);
-        jtxt_precioVenta2.setEnabled(false);
-        jPanel2.add(jtxt_precioVenta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 320, 30));
+        txt_total_producto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txt_total_producto.setForeground(new java.awt.Color(102, 102, 102));
+        txt_total_producto.setBorder(null);
+        txt_total_producto.setEnabled(false);
+        jPanel2.add(txt_total_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 320, 30));
 
         jSeparator6.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 350, 10));
@@ -225,7 +299,12 @@ public class frmVenta extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Productos"));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_detalle = new javax.swing.JTable(){
+            public boolean isCellEditable(int row,int column){
+                return false;
+            }
+        };
+        tabla_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -236,36 +315,68 @@ public class frmVenta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabla_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_detalleMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabla_detalle);
 
-        jButton3.setBackground(new java.awt.Color(13, 55, 212));
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Quitar Producto");
+        btn_guardarVenta.setBackground(new java.awt.Color(13, 55, 212));
+        btn_guardarVenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_guardarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        btn_guardarVenta.setText("Guardar Venta");
+        btn_guardarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarVentaActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(13, 55, 212));
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Salir");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setText("Total:0");
+        lbl_text_total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbl_text_total.setText("Total: S/.");
+
+        lbl_total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbl_total.setText("0.00");
+
+        btn_quitar.setBackground(new java.awt.Color(13, 55, 212));
+        btn_quitar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_quitar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_quitar.setText("Quitar Producto");
+        btn_quitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_quitarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lbl_text_total)
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(btn_guardarVenta)
+                                .addGap(30, 30, 30)
+                                .addComponent(btn_quitar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -274,21 +385,29 @@ public class frmVenta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_text_total)
+                    .addComponent(lbl_total))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton7))
+                    .addComponent(btn_guardarVenta)
+                    .addComponent(jButton7)
+                    .addComponent(btn_quitar))
                 .addGap(23, 23, 23))
         );
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 400, 390));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 470, 390));
 
-        jButton6.setBackground(new java.awt.Color(13, 55, 212));
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Agregar Producto");
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 150, -1));
+        btn_agregar_producto.setBackground(new java.awt.Color(13, 55, 212));
+        btn_agregar_producto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_agregar_producto.setForeground(new java.awt.Color(255, 255, 255));
+        btn_agregar_producto.setText("Agregar Producto");
+        btn_agregar_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_productoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_agregar_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 150, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,6 +435,10 @@ public class frmVenta extends javax.swing.JFrame {
         
         frmBuscarCliente.toFront();
         frmBuscarCliente.setVisible(true);
+        //frmBuscarCliente.getCliente();
+        if(frmBuscarCliente.getCliente().getId()!=0){
+            venta.setCliente(frmBuscarCliente.getCliente());
+        }
     }//GEN-LAST:event_btn_buscar_clienteActionPerformed
 
     private void btn_buscar_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_productoActionPerformed
@@ -324,6 +447,87 @@ public class frmVenta extends javax.swing.JFrame {
         frmBuscarProducto.toFront();
         frmBuscarProducto.setVisible(true);
     }//GEN-LAST:event_btn_buscar_productoActionPerformed
+
+    private void btn_agregar_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_productoActionPerformed
+        // TODO add your handling code here:
+        //System.out.println(venta.getCliente().toString());
+        
+        int cantidad = Integer.parseInt(txt_cantidad.getText());
+        double precio_unitario = frmBuscarProducto.getProducto().getPrecio_venta();
+        double precio_venta = cantidad*precio_unitario;
+        Producto producto = new Producto(frmBuscarProducto.getProducto().getId(), frmBuscarProducto.getProducto().getNombre(), precio_venta);
+        if(cantidad==0){
+            JOptionPane.showMessageDialog(rootPane, "debe ingresar una cantidad superior a 0");
+            return;
+        }
+        /*if(Double.parseDouble(txt_total_producto.getText())<=0.0){
+            JOptionPane.showMessageDialog(rootPane, "El costo debe ser Positivo");
+            return;
+        }*/
+        
+        if(precio_venta<=0){
+            JOptionPane.showMessageDialog(rootPane, "El costo debe ser Positivo");
+            return;
+        }
+        
+        venta.addVentaDetalle(new VentaDetalle(index, precio_venta, precio_unitario, "A", cantidad, producto));
+        
+        mostrar_detalle(venta);
+        lbl_total.setText(""+venta.getTotal());
+        index++;
+         
+        limpiar_producto();
+        
+        
+        
+    }//GEN-LAST:event_btn_agregar_productoActionPerformed
+
+    private void txt_cantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyPressed
+        // TODO add your handling code here:
+        int cantidad = Integer.parseInt(txt_cantidad.getText());
+        double precio_unitario = Double.parseDouble(txt_precioUnitario.getText());
+        double total = cantidad*precio_unitario;
+        
+        txt_total_producto.setText(""+total+"");
+    }//GEN-LAST:event_txt_cantidadKeyPressed
+
+    private void btn_guardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarVentaActionPerformed
+        // TODO add your handling code here:
+        VentaController ventaController = new VentaController();
+        if(ventaController.insertar(venta)){
+            JOptionPane.showMessageDialog(rootPane,"Venta Registrada con Exito!");
+            venta.getVentaDetalle().clear();
+            mostrar_detalle(venta);
+            limpiar();
+            limpiar_guardar();
+        }else{
+            JOptionPane.showMessageDialog(rootPane,"ERROR!");
+        }
+    }//GEN-LAST:event_btn_guardarVentaActionPerformed
+
+    private void tabla_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_detalleMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()==2){
+            btn_quitar.setEnabled(true);
+            index=tabla_detalle.getSelectedRow();
+            
+            /*int id= Integer.parseInt(tabla_detalle.getValueAt(tabla_categoria.getSelectedRow(),0).toString());
+            String nombre= tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),1).toString();
+            categoria.setId(id);
+            categoria.setNombre(nombre);
+            txt_categoria.setText(nombre);
+            btn_registrar.setText("Editar");
+            btn_cancelar.setEnabled(true);
+            btn_eliminar.setEnabled(true);*/
+        }
+    }//GEN-LAST:event_tabla_detalleMouseClicked
+
+    private void btn_quitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_quitarActionPerformed
+        // TODO add your handling code here:
+        venta.getVentaDetalle().remove(index);
+            mostrar_detalle(venta);
+            limpiar();
+    }//GEN-LAST:event_btn_quitarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,15 +572,15 @@ public class frmVenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton btn_agregar_producto;
     private javax.swing.JButton btn_buscar_cliente;
     private javax.swing.JButton btn_buscar_producto;
+    private javax.swing.JButton btn_guardarVenta;
+    private javax.swing.JButton btn_quitar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -396,13 +600,15 @@ public class frmVenta extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTable jTable1;
-    public static javax.swing.JTextField jtxt_nombreProducto;
-    public static javax.swing.JTextField jtxt_nombreProducto1;
-    private javax.swing.JTextField jtxt_precioCompra;
-    private javax.swing.JTextField jtxt_precioCompra1;
-    private javax.swing.JTextField jtxt_precioVenta;
-    private javax.swing.JTextField jtxt_precioVenta1;
-    private javax.swing.JTextField jtxt_precioVenta2;
+    private javax.swing.JLabel lbl_text_total;
+    private javax.swing.JLabel lbl_total;
+    private javax.swing.JTable tabla_detalle;
+    private javax.swing.JTextField txt_cantidad;
+    public static javax.swing.JTextField txt_idProducto;
+    public static javax.swing.JTextField txt_nombreProducto;
+    public static javax.swing.JTextField txt_nombre_cliente;
+    public static javax.swing.JTextField txt_numero_documento;
+    public static javax.swing.JTextField txt_precioUnitario;
+    private javax.swing.JTextField txt_total_producto;
     // End of variables declaration//GEN-END:variables
 }
