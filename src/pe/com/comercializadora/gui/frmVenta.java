@@ -493,6 +493,14 @@ public class frmVenta extends javax.swing.JFrame {
 
     private void btn_guardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarVentaActionPerformed
         // TODO add your handling code here:
+        if(venta.getCliente()==null){
+            JOptionPane.showMessageDialog(rootPane,"Debe Ingresar un Cliente!");
+            return;
+        }
+        if(venta.getVentaDetalle()==null || venta.getVentaDetalle().isEmpty()){
+            JOptionPane.showMessageDialog(rootPane,"Debe Ingresar al menos un Producto!");
+            return;
+        }
         VentaController ventaController = new VentaController();
         if(ventaController.insertar(venta)){
             JOptionPane.showMessageDialog(rootPane,"Venta Registrada con Exito!");
@@ -502,6 +510,7 @@ public class frmVenta extends javax.swing.JFrame {
             limpiar_guardar();
         }else{
             JOptionPane.showMessageDialog(rootPane,"ERROR!");
+            return;
         }
     }//GEN-LAST:event_btn_guardarVentaActionPerformed
 
