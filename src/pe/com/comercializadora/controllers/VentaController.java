@@ -10,7 +10,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pe.com.comercializadora.config.Conexion;
@@ -108,6 +110,8 @@ public class VentaController {
         sql = "insert into venta (fecha_emision,estado_registro,total,igv,cliente_id) values(?,?,?,?,?)";
       String sql3="select * from venta order by id desc limit 1";
         String sql2 ="insert into venta_detalle (venta_id,precio_venta,precio_unitario,estado_registro,producto_id,cantidad) values (?,?,?,?,?,?) ";
+        String sql4 = "update producto set stock=? where id=?";
+        String sql5 = "select * from producto where id=?";
         boolean valor=false;
         int lastID=0;
         try {
@@ -115,7 +119,13 @@ public class VentaController {
             
             PreparedStatement pst = con.prepareStatement(sql);
             PreparedStatement pst2 = con.prepareStatement(sql2);
-            pst.setDate(1, (Date) venta.getDate());
+            PreparedStatement pst4 = con.prepareStatement(sql4);
+            
+            java.util.Date date = new java.util.Date();
+            String hoy = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+            
+            venta.setDate(hoy);
+            pst.setString(1, venta.getDate());
             pst.setString(2,"A");
             pst.setDouble(3,venta.getTotal());
             pst.setDouble(4,venta.getIGV());
@@ -128,7 +138,26 @@ public class VentaController {
             while(rs.next()){
                 lastID=rs.getInt("id");
             }
+            
+            
             for(int i=0;i<venta.getVentaDetalle().size();i++){
+                //busco producto
+                int stock = 0;
+                PreparedStatement pst5 = con.prepareStatement(sql5);
+                System.out.println("==========ID "+venta.getVentaDetalle().get(i).getProductos().getId());
+                pst5.setInt(1, venta.getVentaDetalle().get(i).getProductos().getId());
+                ResultSet rs2 = pst5.executeQuery();
+                while(rs2.next()){
+                    stock = rs2.getInt("producto.stock");
+                }
+                //fin busco producto
+                //inserto venta
+                stock = stock - venta.getVentaDetalle().get(i).getCantidad();
+                System.out.println(stock);
+                if(stock<0){
+                    JOptionPane.showMessageDialog(null, "ERROR: la cantidad sobrepasa el stock, actualice el nuevo producto");
+                    return false;
+                }
                 pst2.setInt(1, lastID);
                 pst2.setDouble(2,venta.getVentaDetalle().get(i).getPrecio_venta());
                 pst2.setDouble(3,venta.getVentaDetalle().get(i).getPrecio_unitario());
@@ -136,7 +165,12 @@ public class VentaController {
                 pst2.setDouble(5,venta.getVentaDetalle().get(i).getProductos().getId());
                 pst2.setDouble(6,venta.getVentaDetalle().get(i).getCantidad());
                 int isRegistros2 = pst2.executeUpdate();
-                if(isRegistros2!=0){
+                //actualizo producto stock
+                
+                pst4.setInt(1,stock);
+                pst4.setInt(2,venta.getVentaDetalle().get(i).getProductos().getId());
+                int isActualizadoStock = pst4.executeUpdate();
+                if(isRegistros2!=0 && isActualizadoStock!=0){
                     valor = true;
                 }else{
                     System.out.println("NOOO Guarda Detalle");

@@ -14,14 +14,14 @@ import java.util.Date;
  */
 public class Venta {
     private int id;
-    private Date date=getDate();
+    private String date;
     private String estado_registro;
     private double total;
     private double IGV=18.00;
     private Cliente cliente;
     private ArrayList<VentaDetalle> ventaDetalle;
 
-    public Venta(int id, Date date, String estado_registro, double total, Cliente cliente, ArrayList<VentaDetalle> ventaDetalle) {
+    public Venta(int id, String date, String estado_registro, double total, Cliente cliente, ArrayList<VentaDetalle> ventaDetalle) {
         this.id = id;
         this.date = date;
         this.estado_registro = estado_registro;
@@ -37,7 +37,7 @@ public class Venta {
         this.id = id;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -61,7 +61,7 @@ public class Venta {
         return id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

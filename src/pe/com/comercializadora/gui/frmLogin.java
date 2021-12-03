@@ -5,6 +5,11 @@
  */
 package pe.com.comercializadora.gui;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import pe.com.comercializadora.controllers.LoginController;
+import pe.com.comercializadora.modelos.Usuario;
+
 /**
  *
  * @author Andre
@@ -14,11 +19,16 @@ public class frmLogin extends javax.swing.JFrame {
     /**
      * Creates new form frmLogin
      */
+    LoginController loginController = new LoginController();
+    public static Usuario usuario = new Usuario();
+
     public frmLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    public static Usuario getUsuario(){
+        return usuario;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,13 +42,13 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_usuario = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txt_password = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_ingresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -60,23 +70,33 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel4.setText("User:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        jTextField1.setBackground(new java.awt.Color(73, 83, 186));
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_usuario.setBackground(new java.awt.Color(73, 83, 186));
+        txt_usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_usuario.setForeground(new java.awt.Color(255, 255, 255));
+        txt_usuario.setBorder(null);
+        txt_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_usuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 180, 30));
+        txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_usuarioKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 180, 30));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 220, 20));
 
-        jPasswordField1.setBackground(new java.awt.Color(73, 83, 186));
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setBorder(null);
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 180, 30));
+        txt_password.setBackground(new java.awt.Color(73, 83, 186));
+        txt_password.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_password.setForeground(new java.awt.Color(255, 255, 255));
+        txt_password.setBorder(null);
+        txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passwordKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 180, 30));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 220, 20));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/com/comercializadora/resources/user.png"))); // NOI18N
@@ -85,16 +105,16 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/com/comercializadora/resources/key_2.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(239, 46, 122));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Ingresar");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_ingresar.setBackground(new java.awt.Color(239, 46, 122));
+        btn_ingresar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_ingresar.setText("Ingresar");
+        btn_ingresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_ingresarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 220, -1));
+        jPanel1.add(btn_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 220, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,16 +132,41 @@ public class frmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_usuarioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        frmInicio frmInicio = new frmInicio();
-        frmInicio.setVisible(true);;
-    }//GEN-LAST:event_jButton1ActionPerformed
+        usuario.setUsername(txt_usuario.getText());
+        String password = new String(txt_password.getPassword());
+        usuario.setPassword(password);
+        if (loginController.login(usuario)) {
+            this.setVisible(false);
+            frmInicio frmInicio = new frmInicio();
+            frmInicio.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane,"ERROR AL INGRESAR");
+            txt_usuario.requestFocus();
+            return;
+        }
+
+    }//GEN-LAST:event_btn_ingresarActionPerformed
+
+    private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txt_password.requestFocus();
+        }
+    }//GEN-LAST:event_txt_usuarioKeyPressed
+
+    private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            btn_ingresar.doClick();
+        }
+        
+    }//GEN-LAST:event_txt_passwordKeyPressed
 
     /**
      * @param args the command line arguments
@@ -159,16 +204,16 @@ public class frmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_ingresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField txt_password;
+    private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }

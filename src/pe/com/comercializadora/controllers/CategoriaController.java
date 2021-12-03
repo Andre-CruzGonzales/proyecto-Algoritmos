@@ -100,6 +100,23 @@ public class CategoriaController {
             return false;
         }
     }
+    public boolean activar(Categoria categoria){
+        sql = "update categoria set estado_registro=? where id=?";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1,"A");
+            pst.setInt(2,categoria.getId());
+            int isRegistros = pst.executeUpdate();
+            if(isRegistros!=0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
     public boolean destroy(Categoria categoria){
         sql = "delete from categoria where id=?";
         try {

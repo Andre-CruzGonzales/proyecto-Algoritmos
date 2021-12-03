@@ -201,7 +201,7 @@ public class frmCategoria extends javax.swing.JFrame {
     btn_eliminar.setBackground(new java.awt.Color(13, 55, 212));
     btn_eliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
-    btn_eliminar.setText("eliminar");
+    btn_eliminar.setText("Desactivar");
     btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btn_eliminarActionPerformed(evt);
@@ -333,6 +333,13 @@ public class frmCategoria extends javax.swing.JFrame {
         if(evt.getClickCount()==2){
             int id= Integer.parseInt(tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),0).toString());
             String nombre= tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),1).toString();
+            String estado_registro = tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),2).toString();
+            if(estado_registro.equals("I")){
+                btn_eliminar.setText("Activar");
+            }
+            if(estado_registro.equals("A")){
+                btn_eliminar.setText("Desactivar");
+            }
             categoria.setId(id);
             categoria.setNombre(nombre);
             txt_categoria.setText(nombre);
@@ -357,10 +364,20 @@ public class frmCategoria extends javax.swing.JFrame {
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
         //this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+        CategoriaController categoriaController = new CategoriaController();
+        if(btn_eliminar.getText().equals("Desactivar")){
+            categoriaController.desactivar(categoria);
+        }
+        if(btn_eliminar.getText().equals("Activar")){
+            categoriaController.activar(categoria);
+        }
+        limpiar();
+        mostrar("");
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     /**
