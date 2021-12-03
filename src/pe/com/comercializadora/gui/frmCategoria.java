@@ -370,11 +370,17 @@ public class frmCategoria extends javax.swing.JFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
         CategoriaController categoriaController = new CategoriaController();
-        if(btn_eliminar.getText().equals("Desactivar")){
-            categoriaController.desactivar(categoria);
-        }
-        if(btn_eliminar.getText().equals("Activar")){
-            categoriaController.activar(categoria);
+        int confirmacion = JOptionPane.showConfirmDialog(rootPane, "Esta Seguro de "+btn_eliminar.getText()+" este item","Confirmar",2);
+        if(confirmacion==0){
+        
+            if(btn_eliminar.getText().equals("Desactivar")){
+                categoriaController.desactivar(categoria);
+            }
+            if(btn_eliminar.getText().equals("Activar")){
+                categoriaController.activar(categoria);
+            }
+        }else{
+            return;
         }
         limpiar();
         mostrar("");

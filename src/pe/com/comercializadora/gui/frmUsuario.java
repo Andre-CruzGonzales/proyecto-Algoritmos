@@ -620,17 +620,25 @@ public class frmUsuario extends javax.swing.JFrame {
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
         //this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+        
         UsuarioController controller = new UsuarioController();
-        if(btn_eliminar.getText().equals("Desactivar")){
-            
-            controller.desactivar_usuario(colaborador);
+        int confirmacion = JOptionPane.showConfirmDialog(rootPane, "Esta Seguro de "+btn_eliminar.getText()+" este item","Confirmar",2);
+        if(confirmacion==0){
+            if(btn_eliminar.getText().equals("Desactivar")){
+
+                controller.desactivar_usuario(colaborador);
+            }
+            if(btn_eliminar.getText().equals("Activar")){
+                controller.activar_usuario(colaborador);
+            }
         }
-        if(btn_eliminar.getText().equals("Activar")){
-            controller.activar_usuario(colaborador);
+        else{
+            return;
         }
         mostrar("");
         limpiar();

@@ -111,7 +111,7 @@ public class frmVenta extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         txt_precioUnitario = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
         txt_nombre_cliente = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         btn_buscar_producto = new javax.swing.JButton();
@@ -131,7 +131,7 @@ public class frmVenta extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_detalle = new javax.swing.JTable();
         btn_guardarVenta = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
         lbl_text_total = new javax.swing.JLabel();
         lbl_total = new javax.swing.JLabel();
         btn_quitar = new javax.swing.JButton();
@@ -197,16 +197,16 @@ public class frmVenta extends javax.swing.JFrame {
         txt_precioUnitario.setEnabled(false);
         jPanel2.add(txt_precioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 170, 30));
 
-        jButton1.setBackground(new java.awt.Color(13, 55, 212));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_cancelar.setBackground(new java.awt.Color(13, 55, 212));
+        btn_cancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_cancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 130, -1));
+        jPanel2.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 130, -1));
 
         txt_nombre_cliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txt_nombre_cliente.setForeground(new java.awt.Color(102, 102, 102));
@@ -332,10 +332,15 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(13, 55, 212));
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Salir");
+        btn_salir.setBackground(new java.awt.Color(13, 55, 212));
+        btn_salir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_salir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         lbl_text_total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbl_text_total.setText("Total: S/.");
@@ -375,7 +380,7 @@ public class frmVenta extends javax.swing.JFrame {
                                 .addComponent(btn_quitar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -391,7 +396,7 @@ public class frmVenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_guardarVenta)
-                    .addComponent(jButton7)
+                    .addComponent(btn_salir)
                     .addComponent(btn_quitar))
                 .addGap(23, 23, 23))
         );
@@ -425,10 +430,10 @@ public class frmVenta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_buscar_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_clienteActionPerformed
         // TODO add your handling code here:
@@ -538,6 +543,12 @@ public class frmVenta extends javax.swing.JFrame {
             limpiar();
     }//GEN-LAST:event_btn_quitarActionPerformed
 
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        
+    }//GEN-LAST:event_btn_salirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -584,10 +595,10 @@ public class frmVenta extends javax.swing.JFrame {
     public static javax.swing.JButton btn_agregar_producto;
     private javax.swing.JButton btn_buscar_cliente;
     private javax.swing.JButton btn_buscar_producto;
+    private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardarVenta;
     private javax.swing.JButton btn_quitar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
