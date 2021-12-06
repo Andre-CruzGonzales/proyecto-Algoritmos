@@ -86,6 +86,7 @@ public class frmUsuario extends javax.swing.JFrame {
         cbx_tipo_documento.setSelectedIndex(0);
         btn_eliminar.setEnabled(false);
         btn_cancelar.setEnabled(false);
+        btn_registrar.setText("Registrar");
         
     }
 

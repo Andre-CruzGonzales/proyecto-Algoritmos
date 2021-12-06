@@ -31,7 +31,7 @@ public class UsuarioController {
         String [] registro = new String[13];
         totalRegistro = 0;
         modelo =  new DefaultTableModel(null,titulo);
-        sql = "select * from Colaborador "
+        sql = "select * from colaborador "
                 + "LEFT JOIN usuario ON usuario.id=colaborador.usuario_id "
                 + "LEFT JOIN tipo_documento ON tipo_documento.id = colaborador.tipo_documento_id "
                 + "LEFT JOIN rol ON rol.id = usuario.rol_id "
@@ -57,7 +57,7 @@ public class UsuarioController {
                 modelo.addRow(registro);
             }
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showConfirmDialog(null, "UsuarioController->mostrar: "+e);
         }
         return modelo;
     }

@@ -5,6 +5,7 @@
  */
 package pe.com.comercializadora.gui;
 
+import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -255,6 +256,9 @@ public class frmVenta extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_cantidadKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cantidadKeyTyped(evt);
+            }
         });
         jPanel2.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 130, 30));
 
@@ -489,11 +493,14 @@ public class frmVenta extends javax.swing.JFrame {
 
     private void txt_cantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyPressed
         // TODO add your handling code here:
-        int cantidad = Integer.parseInt(txt_cantidad.getText());
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            int cantidad = Integer.parseInt(txt_cantidad.getText());
         double precio_unitario = Double.parseDouble(txt_precioUnitario.getText());
         double total = cantidad*precio_unitario;
         
         txt_total_producto.setText(""+total+"");
+        }
+        
     }//GEN-LAST:event_txt_cantidadKeyPressed
 
     private void btn_guardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarVentaActionPerformed
@@ -548,6 +555,15 @@ public class frmVenta extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void txt_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!(Character.isDigit(c)) && !(c==(char) KeyEvent.VK_BACKSPACE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_cantidadKeyTyped
 
     /**
      * @param args the command line arguments
