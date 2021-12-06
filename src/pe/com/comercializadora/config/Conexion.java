@@ -17,10 +17,10 @@ import javax.swing.JOptionPane;
 public class Conexion {
     //jdbc:mysql://localhost/" + dbName + "?user=" + dbUserName + "&password=" + dbPassword + "&useUnicode=true&characterEncoding=UTF-8";
     private final String db = "comercializadora";
-    private final String user = "root";
-    private final String password="";
+    private final String user = "andre";
+    private final String password="password123";
     //private final String host = "20.124.130.23/"+db+"?user="+user+"&password="+password+"&useUnicode=true&characterEncoding=UTF-8";
-    private final String url = "jdbc:mysql://"+"localhost/"+db;
+    private final String url = "jdbc:mysql://"+"147.182.186.228/"+db;
     public Connection conectar(){
         Connection link =null;
         try {
