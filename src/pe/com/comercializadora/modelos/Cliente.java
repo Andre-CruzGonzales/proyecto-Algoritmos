@@ -9,29 +9,24 @@ package pe.com.comercializadora.modelos;
  *
  * @author Andre
  */
-public class Cliente {
+public class Cliente extends Persona {
     private int id;
-    private String numero_documento;
-    private String nombre;
-    private String direccion;
-    private String email;
-    private String celular;
+    
+    
+    
+    
+    
     private String estado_registro;
-    private TipoDocumento tipo_documento;
+    
 
     public Cliente(int id, String numero_documento, String nombre, String direccion, String email, String celular, String estado_registro, TipoDocumento tipo_documento) {
+        super(numero_documento, nombre, direccion, celular, tipo_documento, email);
         this.id = id;
-        this.numero_documento = numero_documento;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.email = email;
-        this.celular = celular;
         this.estado_registro = estado_registro;
-        this.tipo_documento = tipo_documento;
     }
     
     public Cliente(){
-        
+        super();
     }
 
     public void setId(int id) {
@@ -39,23 +34,23 @@ public class Cliente {
     }
 
     public void setNumero_documento(String numero_documento) {
-        this.numero_documento = numero_documento;
+        super.setNumero_documento(numero_documento);
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        super.setNombre(nombre);
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        super.setDireccion(direccion);
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        super.setEmail(email);
     }
 
     public void setCelular(String celular) {
-        this.celular = celular;
+        super.setCelular(celular);
     }
 
     public void setEstado_registro(String estado_registro) {
@@ -63,7 +58,7 @@ public class Cliente {
     }
 
     public void setTipo_documento(TipoDocumento tipo_documento) {
-        this.tipo_documento = tipo_documento;
+        super.setTipo_documento(tipo_documento);
     }
 
     public int getId() {
@@ -71,23 +66,23 @@ public class Cliente {
     }
 
     public String getNumero_documento() {
-        return numero_documento;
+        return super.getNumero_documento();
     }
 
     public String getNombre() {
-        return nombre;
+        return super.getNombre();
     }
 
     public String getDireccion() {
-        return direccion;
+        return super.getDireccion();
     }
 
     public String getEmail() {
-        return email;
+        return super.getEmail();
     }
 
     public String getCelular() {
-        return celular;
+        return super.getCelular();
     }
 
     public String getEstado_registro() {
@@ -95,7 +90,7 @@ public class Cliente {
     }
 
     public TipoDocumento getTipo_documento() {
-        return tipo_documento;
+        return super.getTipo_documento();
     }
     public String toString(){
         return "id:"+this.getId()+" numero_documento:"+ this.getNumero_documento()+" nombre:"+this.getNombre();

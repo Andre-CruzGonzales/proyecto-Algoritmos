@@ -7,17 +7,26 @@
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmCliente.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/controllers/LoginController.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmUsuario.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Usuario.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmLogin.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/controllers/CategoriaController.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmHistorialVentas.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmCategoria.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Persona.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Producto.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/VentaDetalle.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/controllers/VentaController.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmInicio.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmMarca.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmBuscarProducto.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmVenta.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/config/Conexion.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Colaborador.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Rol.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Venta.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmBuscarCliente.java</file>
             <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/gui/frmProducto.java</file>
+            <file>file:/C:/Users/Andre/Documents/NetBeansProjects/Proyecto_Algoritmos/src/pe/com/comercializadora/modelos/Cliente.java</file>
         </group>
     </open-files>
 </project-private>

@@ -9,49 +9,41 @@ package pe.com.comercializadora.modelos;
  *
  * @author Andre
  */
-public class Colaborador {
+public class Colaborador extends Persona{
     private int id;
-    private String numero_documento;
-    private String nombre;
-    private String direccion;
-    private String celular;
+    
     private String estado_registro;
     private Usuario usuario;
-    private TipoDocumento tipo_documento;
-    private String email;
     public Colaborador(int id, String numero_documento, String nombre, String direccion, String celular, String estado_registro, Usuario usuario, TipoDocumento tipo_documento,String email) {
+        super(numero_documento, nombre, direccion, celular, tipo_documento, email);
         this.id = id;
-        this.numero_documento = numero_documento;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.celular = celular;
         this.estado_registro = estado_registro;
         this.usuario = usuario;
-        this.tipo_documento = tipo_documento;
-        this.email = email;
     }
+    
     public Colaborador(){
-        
+        super();
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    @Override
     public void setNumero_documento(String numero_documento) {
-        this.numero_documento = numero_documento;
+        super.setNumero_documento(numero_documento);
     }
-
+    
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        super.setNombre(nombre);
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        super.setDireccion(direccion);
     }
 
     public void setCelular(String celular) {
-        this.celular = celular;
+        super.setCelular(celular);
     }
 
     public void setEstado_registro(String estado_registro) {
@@ -63,11 +55,11 @@ public class Colaborador {
     }
 
     public void setTipo_documento(TipoDocumento tipo_documento) {
-        this.tipo_documento = tipo_documento;
+        super.setTipo_documento(tipo_documento);
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        super.setEmail(email);
     }
     
 
@@ -76,19 +68,19 @@ public class Colaborador {
     }
 
     public String getNumero_documento() {
-        return numero_documento;
+        return super.getNumero_documento();
     }
 
     public String getNombre() {
-        return nombre;
+        return super.getNombre();
     }
 
     public String getDireccion() {
-        return direccion;
+        return super.getDireccion();
     }
 
     public String getCelular() {
-        return celular;
+        return super.getCelular();
     }
 
     public String getEstado_registro() {
@@ -100,11 +92,11 @@ public class Colaborador {
     }
 
     public TipoDocumento getTipo_documento() {
-        return tipo_documento;
+        return super.getTipo_documento();
     }
 
     public String getEmail() {
-        return email;
+        return super.getEmail();
     }
     
     

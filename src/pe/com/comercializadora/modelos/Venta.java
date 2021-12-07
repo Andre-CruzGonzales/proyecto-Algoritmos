@@ -17,7 +17,7 @@ public class Venta {
     private String date;
     private String estado_registro;
     private double total;
-    private double IGV=18.00;
+    private final double IGV=18.00;
     private Cliente cliente;
     private ArrayList<VentaDetalle> ventaDetalle;
 
