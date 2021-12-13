@@ -9,8 +9,16 @@ import java.awt.Color;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import pe.com.comercializadora.controllers.CategoriaController;
+import pe.com.comercializadora.controllers.MarcaController;
+import pe.com.comercializadora.controllers.ProductoController;
+import pe.com.comercializadora.modelos.Categoria;
+import pe.com.comercializadora.modelos.Marca;
+import pe.com.comercializadora.modelos.Producto;
 
 /**
  *
@@ -21,11 +29,71 @@ public class frmProducto extends javax.swing.JFrame {
     /**
      * Creates new form frmProducto
      */
+    CategoriaController categoriaController = new CategoriaController();
+    MarcaController marcaController = new MarcaController();
+    Producto producto = new Producto();
+
     public frmProducto() {
         initComponents();
-        jcbx_marca.setBackground(new java.awt.Color(255, 255, 255));
-        jcbx_categoria.setBackground(new java.awt.Color(255, 255, 255));
+        cbx_marca.setBackground(new java.awt.Color(255, 255, 255));
+        cbx_categoria.setBackground(new java.awt.Color(255, 255, 255));
         this.setLocationRelativeTo(null);
+        cbx_list();
+        mostrar("");
+        limpiar();
+    }
+
+    void cbx_list() {
+        for (int i = 0; i < categoriaController.list().size(); i++) {
+            cbx_categoria.addItem(categoriaController.list().get(i).getNombre());
+            //System.out.println(tipo)
+        }
+        for (int i = 0; i < marcaController.list().size(); i++) {
+            cbx_marca.addItem(marcaController.list().get(i).getNombre());
+            //System.out.println(tipo)
+        }
+
+    }
+
+    void ocultar_columnas() {
+        tabla_producto.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabla_producto.getColumnModel().getColumn(0).setMinWidth(0);
+        tabla_producto.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        tabla_producto.getColumnModel().getColumn(1).setMaxWidth(0);
+        tabla_producto.getColumnModel().getColumn(1).setMinWidth(0);
+        tabla_producto.getColumnModel().getColumn(1).setPreferredWidth(0);
+
+        tabla_producto.getColumnModel().getColumn(2).setMaxWidth(0);
+        tabla_producto.getColumnModel().getColumn(2).setMinWidth(0);
+        tabla_producto.getColumnModel().getColumn(2).setPreferredWidth(0);
+
+    }
+
+    void limpiar() {
+        txt_nombreProducto.setText("");
+        txt_precioCompra.setText("0.00");
+        txt_precioVenta.setText("0.00");
+        txt_stock.setText("0");
+        cbx_categoria.setSelectedIndex(0);
+        cbx_marca.setSelectedIndex(0);
+        btn_eliminar.setEnabled(false);
+        btn_cancelar.setEnabled(false);
+        btn_registrar.setText("Registrar");
+
+    }
+
+    void mostrar(String buscar) {
+        try {
+            DefaultTableModel modelo;
+            ProductoController controller = new ProductoController();
+            modelo = controller.mostrar(buscar);
+            tabla_producto.setModel(modelo);
+            ocultar_columnas();
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
     }
 
     /**
@@ -42,31 +110,34 @@ public class frmProducto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jtxt_nombreProducto = new javax.swing.JTextField();
+        txt_nombreProducto = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jtxt_precioCompra = new javax.swing.JTextField();
+        txt_precioCompra = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        jtxt_precioVenta = new javax.swing.JTextField();
+        txt_precioVenta = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        jcbx_marca = new javax.swing.JComboBox<>();
+        cbx_marca = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jcbx_categoria = new javax.swing.JComboBox<>();
+        cbx_categoria = new javax.swing.JComboBox<>();
         jSeparator6 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
+        btn_registrar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla_categoria = new javax.swing.JTable();
+        tabla_producto = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
-        txt_buscar_categoria = new javax.swing.JTextField();
+        txt_buscar_producto = new javax.swing.JTextField();
         btn_buscar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
+        txt_stock = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -93,18 +164,18 @@ public class frmProducto extends javax.swing.JFrame {
         jLabel3.setText("Nombre del Producto:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
-        jtxt_nombreProducto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_nombreProducto.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_nombreProducto.setBorder(null);
-        jPanel2.add(jtxt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 370, 30));
+        txt_nombreProducto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_nombreProducto.setForeground(new java.awt.Color(102, 102, 102));
+        txt_nombreProducto.setBorder(null);
+        jPanel2.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 370, 30));
 
         jSeparator2.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 380, 10));
 
-        jtxt_precioCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_precioCompra.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioCompra.setBorder(null);
-        jPanel2.add(jtxt_precioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 370, 30));
+        txt_precioCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_precioCompra.setForeground(new java.awt.Color(102, 102, 102));
+        txt_precioCompra.setBorder(null);
+        jPanel2.add(txt_precioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 370, 30));
 
         jSeparator3.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 380, 10));
@@ -122,10 +193,10 @@ public class frmProducto extends javax.swing.JFrame {
         jLabel5.setText("Precio de Venta:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
-        jtxt_precioVenta.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxt_precioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        jtxt_precioVenta.setBorder(null);
-        jPanel2.add(jtxt_precioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 370, 30));
+        txt_precioVenta.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txt_precioVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txt_precioVenta.setBorder(null);
+        jPanel2.add(txt_precioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 370, 30));
 
         jSeparator5.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 380, 10));
@@ -135,54 +206,57 @@ public class frmProducto extends javax.swing.JFrame {
         jLabel6.setText("Marca:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
 
-        jcbx_marca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jcbx_marca.setForeground(new java.awt.Color(102, 102, 102));
-        jcbx_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sapolio", "Ace" }));
-        jcbx_marca.setSelectedIndex(-1);
-        jcbx_marca.setBorder(null);
-        jPanel2.add(jcbx_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 380, 30));
+        cbx_marca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbx_marca.setForeground(new java.awt.Color(102, 102, 102));
+        cbx_marca.setSelectedIndex(-1);
+        cbx_marca.setBorder(null);
+        jPanel2.add(cbx_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 380, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(34, 105, 212));
         jLabel7.setText("Categoria:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
 
-        jcbx_categoria.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jcbx_categoria.setForeground(new java.awt.Color(102, 102, 102));
-        jcbx_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Limpieza del Hogar", "Limpieza Personal" }));
-        jcbx_categoria.setSelectedIndex(-1);
-        jcbx_categoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel2.add(jcbx_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 380, 30));
+        cbx_categoria.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbx_categoria.setForeground(new java.awt.Color(102, 102, 102));
+        cbx_categoria.setSelectedIndex(-1);
+        cbx_categoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel2.add(cbx_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 380, 30));
 
         jSeparator6.setForeground(new java.awt.Color(34, 105, 212));
         jPanel2.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 380, 10));
 
-        jButton1.setBackground(new java.awt.Color(13, 55, 212));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_cancelar.setBackground(new java.awt.Color(13, 55, 212));
+        btn_cancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_cancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 130, -1));
+        jPanel2.add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, 130, -1));
 
-        jButton2.setBackground(new java.awt.Color(13, 55, 212));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Registrar");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 130, -1));
+        btn_registrar.setBackground(new java.awt.Color(13, 55, 212));
+        btn_registrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_registrar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_registrar.setText("Registrar");
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 130, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Productos"));
 
-        tabla_categoria = new javax.swing.JTable(){
+        tabla_producto = new javax.swing.JTable(){
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
-        tabla_categoria.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -194,26 +268,25 @@ public class frmProducto extends javax.swing.JFrame {
             }
         )
     );
-    tabla_categoria.setFocusable(false);
-    tabla_categoria.getTableHeader().setResizingAllowed(false);
-    tabla_categoria.getTableHeader().setReorderingAllowed(false);
-    tabla_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
+    tabla_producto.setFocusable(false);
+    tabla_producto.getTableHeader().setReorderingAllowed(false);
+    tabla_producto.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
-            tabla_categoriaMouseClicked(evt);
+            tabla_productoMouseClicked(evt);
         }
     });
-    jScrollPane1.setViewportView(tabla_categoria);
+    jScrollPane1.setViewportView(tabla_producto);
 
     jLabel8.setText("Buscar:");
 
     jSeparator7.setForeground(new java.awt.Color(34, 105, 212));
 
-    txt_buscar_categoria.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    txt_buscar_categoria.setForeground(new java.awt.Color(102, 102, 102));
-    txt_buscar_categoria.setBorder(null);
-    txt_buscar_categoria.addKeyListener(new java.awt.event.KeyAdapter() {
+    txt_buscar_producto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    txt_buscar_producto.setForeground(new java.awt.Color(102, 102, 102));
+    txt_buscar_producto.setBorder(null);
+    txt_buscar_producto.addKeyListener(new java.awt.event.KeyAdapter() {
         public void keyPressed(java.awt.event.KeyEvent evt) {
-            txt_buscar_categoriaKeyPressed(evt);
+            txt_buscar_productoKeyPressed(evt);
         }
     });
 
@@ -241,6 +314,11 @@ public class frmProducto extends javax.swing.JFrame {
     btn_eliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
     btn_eliminar.setText("eliminar");
+    btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btn_eliminarActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -249,29 +327,28 @@ public class frmProducto extends javax.swing.JFrame {
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
-                    .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addComponent(jLabel8)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator7)
-                        .addComponent(txt_buscar_categoria, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(30, 30, 30)
                             .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(66, 66, 66)
                             .addComponent(btn_eliminar)
                             .addGap(51, 51, 51)
-                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(44, 44, 44))))
+                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
     );
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txt_buscar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel8))
             .addGap(0, 0, 0)
             .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,57 +362,201 @@ public class frmProducto extends javax.swing.JFrame {
             .addContainerGap())
     );
 
-    jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 500, 430));
+    jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 610, 430));
+
+    txt_stock.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    txt_stock.setForeground(new java.awt.Color(102, 102, 102));
+    txt_stock.setBorder(null);
+    jPanel2.add(txt_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 370, 30));
+
+    jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jLabel9.setForeground(new java.awt.Color(34, 105, 212));
+    jLabel9.setText("Stock");
+    jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, -1, -1));
+
+    jSeparator8.setForeground(new java.awt.Color(34, 105, 212));
+    jPanel2.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 380, 10));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
+        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1069, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
     );
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
-    private void tabla_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_categoriaMouseClicked
-        // TODO add your handling code here:
-        //tabla_categoria.getColumnModel().getColumn(0).setMaxWidth(0);
-        //tabla_categoria.getColumnModel().getColumn(0).setMinWidth(0);
-        if(evt.getClickCount()==2){
-            int id= Integer.parseInt(tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),0).toString());
-            String nombre= tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(),1).toString();
-            
+    private void tabla_productoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_productoMouseClicked
+        if (evt.getClickCount() == 2) {
+            btn_cancelar.setEnabled(true);
+            int idPro = 0;
+            int idCat = 0;
+            int idMar = 0;
+
+            String nombre = "";
+            String precio_compra = "";
+            String precio_venta = "";
+            String stock = "";
+            String estado_registro = "";
+
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 0) != null) {
+                idPro = Integer.parseInt(tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 0).toString());
+
+            }
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 1) != null) {
+                idCat = Integer.parseInt(tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 1).toString());
+            }
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 2) != null) {
+                idMar = Integer.parseInt(tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 2).toString());
+            }
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 3) != null) {
+                nombre = tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 3).toString();
+            }
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 4) != null) {
+                stock = tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 4).toString();
+            }
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 7) != null) {
+                precio_compra = tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 7).toString();
+            }
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 8) != null) {
+                precio_venta = tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 8).toString();
+            }
+
+            if (tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 9) != null) {
+                estado_registro = tabla_producto.getValueAt(tabla_producto.getSelectedRow(), 9).toString();
+            }
+
+            producto.setId(idPro);
+            producto.setCategoria(new Categoria(idCat, null, null));
+            producto.setMarca(new Marca(idMar, null, null));
+            producto.setNombre(nombre);
+            producto.setPrecio_compra(Double.parseDouble(precio_compra));
+            producto.setPrecio_venta(Double.parseDouble(precio_venta));
+            producto.setStock(Double.parseDouble(stock));
+            //producto.setEstado_registro(e);
+            int index_marca = marcaController.list_compareID(marcaController.list(), idMar);
+            int index_categoria = categoriaController.list_compareID(categoriaController.list(), idCat);
+            System.out.println(nombre);
+            cbx_categoria.setSelectedIndex(index_categoria);
+            cbx_marca.setSelectedIndex(index_marca);
+            txt_nombreProducto.setText(nombre);
+
+            txt_precioCompra.setText(precio_compra);
+            txt_precioVenta.setText(precio_venta);
+            txt_stock.setText(stock);
+            btn_registrar.setText("Editar");
+            btn_eliminar.setEnabled(true);
+            if (estado_registro.equals("I")) {
+                btn_eliminar.setText("Activar");
+            }
+            if (estado_registro.equals("A")) {
+                btn_eliminar.setText("Desactivar");
+            }
         }
 
-    }//GEN-LAST:event_tabla_categoriaMouseClicked
+    }//GEN-LAST:event_tabla_productoMouseClicked
 
-    private void txt_buscar_categoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_categoriaKeyPressed
+    private void txt_buscar_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_productoKeyPressed
         // TODO add your handling code here:
 
         //palabra += evt.getKeyChar();
         //txt_buscar_categoria.setText(palabra);
         //JOptionPane.showMessageDialog(rootPane,palabra);
-        
-    }//GEN-LAST:event_txt_buscar_categoriaKeyPressed
+
+    }//GEN-LAST:event_txt_buscar_productoKeyPressed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // TODO add your handling code here:
-        
+        mostrar(txt_buscar_producto.getText());
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
         //this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+        // TODO add your handling code here:
+        int index_categoria = categoriaController.list().get(cbx_categoria.getSelectedIndex()).getId();
+        int index_marca = marcaController.list().get(cbx_marca.getSelectedIndex()).getId();
+        String nombre = txt_nombreProducto.getText();
+        double precio_compra = Double.parseDouble(txt_precioCompra.getText());
+        double precio_venta = Double.parseDouble(txt_precioVenta.getText());
+        ProductoController productoController = new ProductoController();
+        double stock = Double.parseDouble(txt_stock.getText());
+        if (nombre.length() == 0) {
+            JOptionPane.showMessageDialog(rootPane, "Obligario ingrear un numero documento");
+            txt_nombreProducto.requestFocus();
+            return;
+        }
+
+        if (precio_compra <= 0.00 || precio_venta <= 0.00) {
+            JOptionPane.showMessageDialog(rootPane, "Obligario ingrear un precio de compra y venta");
+            txt_precioCompra.requestFocus();
+            return;
+        }
+        if (btn_registrar.getText().equals("Registrar")) {
+            producto.setNombre(nombre);
+            producto.setPrecio_compra(precio_compra);
+            producto.setPrecio_venta(precio_venta);
+            producto.setCategoria(new Categoria(index_categoria, null, null));
+            producto.setStock(stock);
+            producto.setMarca(new Marca(index_marca, null, null));
+            productoController.insertar(producto);
+            JOptionPane.showMessageDialog(rootPane, "Producto Registrado con EXITO");
+
+        }
+        if (btn_registrar.getText().equals("Editar")) {
+            int confirmacion = JOptionPane.showConfirmDialog(rootPane, "Esta Seguro de actualizar este item", "Confirmar", 2);
+            if (confirmacion == 0) {
+                producto.setNombre(nombre);
+                producto.setPrecio_compra(precio_compra);
+                producto.setPrecio_venta(precio_venta);
+                producto.setCategoria(new Categoria(index_categoria, null, null));
+                producto.setStock(stock);
+                producto.setMarca(new Marca(index_marca, null, null));
+                productoController.editar(producto);
+            } else {
+                return;
+            }
+        }
+
+        limpiar();
+        mostrar("");
+
+    }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        // TODO add your handling code here:
+        ProductoController controller = new ProductoController();
+        int confirmacion = JOptionPane.showConfirmDialog(rootPane, "Esta Seguro de " + btn_eliminar.getText() + " este item", "Confirmar", 2);
+        if (confirmacion == 0) {
+            if (btn_eliminar.getText().equals("Desactivar")) {
+
+                controller.desactivar(producto);
+            }
+            if (btn_eliminar.getText().equals("Activar")) {
+                controller.activar(producto);
+            }
+        } else {
+            return;
+        }
+        mostrar("");
+        limpiar();
+    }//GEN-LAST:event_btn_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,10 +595,12 @@ public class frmProducto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_registrar;
     private javax.swing.JButton btn_salir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> cbx_categoria;
+    private javax.swing.JComboBox<String> cbx_marca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -386,6 +609,7 @@ public class frmProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -396,12 +620,12 @@ public class frmProducto extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JComboBox<String> jcbx_categoria;
-    private javax.swing.JComboBox<String> jcbx_marca;
-    private javax.swing.JTextField jtxt_nombreProducto;
-    private javax.swing.JTextField jtxt_precioCompra;
-    private javax.swing.JTextField jtxt_precioVenta;
-    private javax.swing.JTable tabla_categoria;
-    private javax.swing.JTextField txt_buscar_categoria;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JTable tabla_producto;
+    private javax.swing.JTextField txt_buscar_producto;
+    private javax.swing.JTextField txt_nombreProducto;
+    private javax.swing.JTextField txt_precioCompra;
+    private javax.swing.JTextField txt_precioVenta;
+    private javax.swing.JTextField txt_stock;
     // End of variables declaration//GEN-END:variables
 }

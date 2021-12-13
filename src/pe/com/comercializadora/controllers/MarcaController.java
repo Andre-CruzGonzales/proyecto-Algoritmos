@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pe.com.comercializadora.config.Conexion;
@@ -130,5 +131,34 @@ public class MarcaController {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
+    }
+    public ArrayList<Marca> list(){
+        Marca tipo_documento;
+        ArrayList<Marca> tipos_documentos=new ArrayList<Marca>();
+        sql = "select * from marca where estado_registro = 'A'";
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String estado_registro = rs.getString("estado_registro");
+                tipo_documento=new Marca(id, nombre, estado_registro);
+                tipos_documentos.add(tipo_documento);
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+        }
+        return tipos_documentos;
+    }
+    public int list_compareID(ArrayList<Marca> tipos,int IDItem){
+        int index=0;
+        for(int i= 0;i<tipos.size();i++){
+            if(tipos.get(i).getId()==IDItem){
+                index=i;
+            }
+        }
+        return index;
     }
 }
