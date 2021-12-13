@@ -357,7 +357,7 @@ public class frmCategoria extends javax.swing.JFrame {
         //palabra += evt.getKeyChar();
         //txt_buscar_categoria.setText(palabra);
         //JOptionPane.showMessageDialog(rootPane,palabra);
-        mostrar(txt_buscar_categoria.getText());
+        
         //System.out.println(palabra);
     }//GEN-LAST:event_txt_buscar_categoriaKeyPressed
 
